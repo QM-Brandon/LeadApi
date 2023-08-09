@@ -1,0 +1,1372 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Q.TESTAPI2</name>
+    </assembly>
+    <members>
+        <member name="M:QuintessaMarketing.API.Common.Utilities.GetWebsiteURL">
+            <summary>
+            Retrieve the URL for the website
+            </summary>
+            <remarks>
+            The returned value is guaranteed to end with a forward slash.
+            </remarks>
+            <returns>
+            The website URL setting for the web site.
+            </returns>
+        </member>
+        <member name="T:QuintessaMarketing.API.Controllers.CaseLeadController">
+            <summary>
+            Quintessa Case Leads
+            </summary>
+        </member>
+        <member name="M:QuintessaMarketing.API.Controllers.CaseLeadController.Post(QuintessaMarketing.API.CaseLeadParameter)">
+            <summary>
+            Post Lead to Quintessa Marketing
+            </summary>
+            <remarks>Send Leads to Quintessa Marketing</remarks>
+            <param name="caseLead">Lead Information</param>
+            <returns>API Call Status</returns>
+            <response code="200">OK</response>
+            <response code="400">Bad Request</response>
+            <response code="401">Unauthorized</response>
+            <response code="500">Internal Server Error</response>
+        </member>
+        <member name="T:Support.Miscellaneous.Utilities">
+            <summary>
+            This module contains commonly used utilities that pertain to the framework
+            as a whole. Functions that are application-specific should be added to apputilities.cs
+            </summary>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.AddBS(System.String)">
+            <summary>
+            Trims and appends a trailing backslash onto a string (if one doesn't already exist).
+            </summary>
+            <param name="cPath">String to which backslash is appended.</param>
+            <returns>A new trimmed string that is guaranteed to have a trailing backslash.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.AddFS(System.String)">
+            <summary>
+            Trims and appends a trailing forward slash onto a string (if one doesn't already exist).
+            </summary>
+            <param name="cPath">String to which forward slash is appended.</param>
+            <returns>A new trimmed string that is guaranteed to have a trailing forward slash.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.AccessAllowed(System.String)">
+            <summary>
+            Retrieves a boolean value indicating if the current user is allowed access 
+            to the selected page.
+            </summary>
+            <param name="strPagename">Pagename for which access is desired.</param>
+            <returns>True if the current user is allowed acces to the specified page, otherwise false.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.AccessToRolesAllowed(System.String,System.String)">
+            <summary>
+            Retrieves a boolean value indicating if the specific user has access 
+            to the selected role(s).
+            </summary>
+            <remarks>
+            If the provided Username is null, then the currently logged in user is used.
+            </remarks>
+            <param name="strRole">Role for which access is checked</param>
+            <param name="strUsername">Username for which the access is checked (optional: default is the current user)</param>
+            <returns>
+            A boolean value that indicates if the specific user has access 
+            to the selected role(s).
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.AccessToRolesAllowed(System.String)">
+            <summary>
+            Retrieves a boolean value indicating if the current user has access 
+            to the selected role(s).
+            </summary>
+            <param name="strRole">Role for which access is checked</param>
+            <returns>
+            A boolean value that indicates if the current user has access 
+            to the selected role(s)
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.AccessToRolesAllowed(System.String,System.String[])">
+            <summary>
+            Retrieves a boolean value indicating if any role in the specified comma delimited
+            string of roles exists within a select array of roles.
+            </summary>
+            <param name="strRoles">A single role, or a comma delimited string of roles.</param>
+            <param name="strUserRoles">An array of roles.</param>
+            <returns>
+            A boolean value that indicates if at least one role in the specified comma delimited
+            string of roles exists within the provided array of roles.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetCKEditorLinks">
+            <summary>
+            Gets a string that contains the script code required to use CKEditor.
+            </summary>
+            <returns>A string that contains the script code required to use CKEditor.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetOffsetDateTime">
+            <summary>
+            Returns the current datetime offset by the hours configured in the web.config.
+            </summary>
+            <remarks>
+            Returns the default datetime if no offset configured in the web.config.
+            </remarks>
+            <returns>
+            The current datetime offset by the number of hours specified in the web.config
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetDate(System.DateTime)">
+            <summary>
+            Converts a DateTime struct to a date string, formatted as M/d/yyyy.
+            </summary>
+            <remarks>
+            Will return an empty string if the DateTime date is equal to 1/1/1900.
+            </remarks>
+            <param name="tDatetime">A DateTime struct to be formatted as a date string.</param>
+            <returns>
+            A date string formatted as M/d/yyyy or an empty string if the date is equal to 1/1/1900.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetEventDateTimes(System.Nullable{System.DateTime},System.Nullable{System.DateTime})">
+            <summary>
+            Gets a formatted string that contans a start and end DateTime.
+            The returned string will be formatted as follows :
+            M/d/yyyy hh:mm tt thru M/d/yyyy hh:mm.
+            </summary>
+            <param name="dtStart">The start DateTime.</param>
+            <param name="dtEnd">The end DateTime.</param>
+            <returns>A formatted string that contans a start and end DateTime.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetTime(System.DateTime)">
+            <summary>
+            Converts a DateTime struct to a string, formatted as hh:mm tt.
+            </summary>
+            <remarks>
+            Will return an empty string if the DateTime time is equal to 12:01 AM.
+            </remarks>
+            <param name="tDatetime">A DateTime struct to be formatted as a time string.</param>
+            <returns>
+            A time string formatted as hh:mm tt or an empty string if the time is equal to 12:01 AM.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetEOD(System.DateTime)">
+            <summary>
+            Get a DateTime structure that is set to the last millisecond of the provided dateTime.
+            </summary>
+            <remarks>
+            This method actually returns the 3 to last millisecond of the provided dateTime in order
+            to work with MSSQL millisecond precision restrictions.
+            </remarks>
+            <param name="dateTime">The DateTime</param>
+            <returns>A DateTime structure that is set to the last millisecond of the provided dateTime.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetBOD(System.DateTime)">
+            <summary>
+            Get a DateTime structure that has a time set to 00:00:00.0000.
+            </summary>
+            <param name="datetime">The DateTime</param>
+            <returns>A DateTime structure that has a time set to 00:00:00.0000.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetLDOM(System.DateTime)">
+            <summary>
+            Get the last day of the month for the given dateTime structure.
+            </summary>
+            <param name="dateTime">The DateTime</param>
+            <returns>The last day of the month for the given dateTime structure.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.getFDOM(System.DateTime)">
+            <summary>
+            Get the first day of the month for the given dateTime structure.
+            </summary>
+            <param name="dateTime">The DateTime</param>
+            <returns>The first day of the month for the given dateTime structure.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetLookupDescription(System.String,System.String)">
+            <summary>
+            Gets the description of a value in the Lookup table.
+            </summary>
+            <param name="Type">The Lookup Type value.</param>
+            <param name="Itemvalue">The Lookup Itemvalue value.</param>
+            <returns>
+            The description for the provided Lookup Type and ItemValue.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetUserRolesList(System.String)">
+            <summary>
+            Get a comma-delimited list of Roles assigned to a user.
+            </summary>
+            <param name="strUsername">A username for which Roles will be returned.</param>
+            <returns>
+            A comma-delimited list of the Roles assigned to the specified user.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetQueryString(System.String,System.String,System.Boolean)">
+            <summary>
+            Gets the <c>QueryString</c> value for a specified parameter name.  If the specified
+            parameter name does not exist, then a default value will be returned.
+            </summary>
+            <param name="QSRef">The name of a <c>QueryString</c> parameter.</param>
+            <param name="DefaultValue">
+            A default value to be returned if the provided <paramref name="QSRef"/> value
+            was not passed as a <c>QueryString</c> parameter.
+            </param>
+            <param name="ConvertToLowerCase">
+            A flag indicating if the returned value should be converted to lower case.
+            </param>
+            <returns>
+            Either the <c>QueryString</c> value for the provided parameter name, or the value
+            provided with <paramref name="DefaultValue"/> if <c>QueryString</c> does not have
+            the specified parameter.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetQueryString(System.String)">
+            <summary>
+            An overloaded version of the <c>GetQueryString</c> method that uses
+            an empty string as the default value and always converts the
+            returned value to lower case.
+            </summary>
+            <param name="QSRef">The name of a <c>QueryString</c> parameter.</param>
+            <returns>
+            Either the <c>QueryString</c> value converted to lower case for the provided
+            parameter name, or and empty string if <c>QueryString</c> does not have the
+            specified parameter.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetQueryString(System.String,System.String)">
+            <summary>
+            An overloaded version of the <c>GetQueryString</c> method that always converts
+            the returned value to lower case.
+            </summary>
+            <param name="QSRef">The name of a <c>QueryString</c> parameter.</param>
+            <param name="defaultValue">
+            A default value to be returned if the provided <paramref name="QSRef"/> value
+            was not passed as a <c>QueryString</c> parameter.
+            </param>
+            <returns>
+            Either the <c>QueryString</c> value for the provided parameter name, or the value
+            provided with <paramref name="defaultValue"/> if <c>QueryString</c> does not have
+            the specified parameter.  In either case, the returned value will be converted to
+            lower case.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetQueryString(System.String,System.Int32)">
+            <summary>
+            Converts a <c>QueryString</c> parameter to an <c>int</c>.
+            </summary>
+            <param name="QSRef">The name of a <c>QueryString</c> parameter.</param>
+            <param name="DefaultValue">
+            A default <c>int</c> value to be returned if the <c>QueryString</c> parameter
+            can not be parsed as an <c>int</c>, or if it wasn't passed as a <c>QueryString</c>
+            parameter.
+            </param>
+            <returns>
+            A <c>QueryString</c> parameter value converted to an <c>int</c> or
+            <paramref name="DefaultValue"/> if the parameter does not exist or
+            cannot be converted to an <c>int</c>.
+            </returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Support.Miscellaneous.Utilities.CheckRequired(System.Web.UI.WebControls.TextBox,System.Text.StringBuilder,System.String)" -->
+        <!-- Badly formed XML comment ignored for member "M:Support.Miscellaneous.Utilities.CheckRequired(System.Web.UI.WebControls.DropDownList,System.Text.StringBuilder,System.String)" -->
+        <member name="M:Support.Miscellaneous.Utilities.SetError(System.Web.UI.WebControls.WebControl,System.Boolean)">
+            <summary>
+            Adds or removes the CSS class <c>inputerror</c> to the provided <c>WebControl</c>
+            as determined by the <paramref name="lFlagAsError"/> parameter.
+            </summary>
+            <param name="oObject">A WebControl to mark or unmark as having an error.</param>
+            <param name="lFlagAsError">
+            A flag to indicate whether the CSS class <c>inputerror</c> should be added or
+            removed from the provided WebControl.  A value of <c>true</c> will add the class
+            and a value of <c>false</c> will remove it.
+            </param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetVirtualRoot">
+            <summary>
+            Retrieve the virtual root setting for the web site as specified in the
+            web.config <c>virtualroot</c> <c>AppSetting</c> value.
+            </summary>
+            <returns>
+            The virtual root setting for the web site as specified in the
+            web.config <c>virtualroot</c> <c>AppSetting</c> value or "/" if
+            <c>virtualroot</c> was not set.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetWebsiteURL">
+            <summary>
+            Retrieve the URL for the website
+            </summary>
+            <remarks>
+            The returned value is guaranteed to end with a forward slash.
+            </remarks>
+            <returns>
+            The website URL setting for the web site.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetCurrentFolder">
+            <summary>
+            Retrieve the fully qualified folder path for the current web page.
+            </summary>
+            <remarks>
+            The returned value is guaranteed to end with a forward slash.
+            </remarks>
+            <returns>
+            The fully qualified folder path for the current web page.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetDefaultRole">
+            <summary>
+            Get the DefaultRole of the Virtual record for the current folder.
+            </summary>
+            <returns>
+            The DefaultRole of the Virtual record for the current folder if it exists.
+            Otherwise, the value of the web.config <c>defaultrole</c> <c>AppSetting</c>
+            is returned.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetDefaultRole(System.String)">
+            <summary>
+            Gets the DefaultRole of the Virtual record for the provided
+            <paramref name="strFoldername"/>.
+            </summary>
+            <param name="strFoldername">
+            A virtual folder name used to lookup a Virtual record.
+            </param>
+            <returns>
+            The DefaultRole of the Virtual record for the provided <paramref name="strFoldername"/> if
+            it exists.  Otherwise, the value of the web.config <c>defaultrole</c> <c>AppSetting</c>
+            is returned.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetHomepage">
+            <summary>
+            Get the HomePage of the Virtual record for the current folder.
+            </summary>
+            <returns>
+            The HomePage of the Virtual record for the current folder if it exists.
+            Otherwise, the value of the web.config <c>defaultpage</c> <c>AppSetting</c>
+            is returned.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetHomepage(System.String)">
+            <summary>
+            Gets the HomePage of the Virtual record for the provided
+            <paramref name="strFoldername"/>.
+            </summary>
+            <param name="strFoldername">
+            A virtual folder name used to lookup a Virtual record.
+            </param>
+            <returns>
+            The HomePage of the Virtual record for the provided <paramref name="strFoldername"/> if
+            it exists.  Otherwise, the value of the web.config <c>defaultpage</c> <c>AppSetting</c>
+            is returned.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetCleanPhonenumber(System.String)">
+            <summary>
+            Returns the digits of a phone number minus any formatting or leading "1" for "+1" strings
+            </summary>
+            <param name="text">
+            The text string containing the phone number to be cleaned
+            </param>
+            <returns>
+            The cleaned-up phone number 
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetTemplate">
+            <summary>
+            Gets a Template for the current Virtual folder and Page.
+            </summary>
+            <returns>
+            A Template for the current Virtual folder and Page.
+            See <see cref="M:Support.Miscellaneous.Utilities.GetTemplate(System.String,System.String,System.String)"/> for a description of the
+            logic used to determine which Template will be returned.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetTemplate(System.String,System.String,System.String)">
+            <summary>
+            Gets a Template for the provided <paramref name="strFoldername"/> Virtual folder
+            and <paramref name="strPagemane"/> Page.  If a Template is specified for the provided
+            page in the PageMaster table, then that Template is returned, otherwise, the
+            Template from the Virtual record corresponding to <paramref name="strFoldername"/>
+            is returned.
+            </summary>
+            <param name="strFoldername">
+            A virtual folder name used to lookup a Virtual record.  The current folder
+            is used if this value is null.
+            </param>
+            <param name="strPagename">
+            A page name used to lookup a PageMaster record.  The current page is used
+            if this value is nulll.
+            </param>
+            <param name="strTemplate">
+            A default Template value that will be returned if a Template isn't found for
+            the Page or the Virtual folder.
+            </param>
+            <returns>
+            A template for the provided <paramref name="strFoldername"/> Virtual folder and
+            <paramref name="strPagename"/> Page.  If <paramref name="strPagename"/> is found
+            in PageMaster and includes a Template, then that value is returned.  If it
+            is not found in PageMaster or PageMaster does not include a Template, then
+            the Template for the Virtual folder will be returned.  Otherwise, if neither
+            the PageMaster record or the Virtual folder record contains a Template, then
+            the default value <paramref name="strTemplate"/> will be returned.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetAspnetUserID">
+            <summary>
+            Gets the ASP.NET UserID as a string for the current user.
+            </summary>
+            <returns>
+            The ASP.NET UserID as a string for the current user.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetAspnetUserID(System.String)">
+            <summary>
+            Gets the ASP.NET UserID as a string for the specified <paramref name="strUsername"/>.
+            </summary>
+            <param name="strUsername">
+            The Username used to lookup the User record.
+            </param>
+            <returns>
+            The ASP.NET UserID as a string for the specified <paramref name="strUsername"/>.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetUserID">
+            <summary>
+            Gets the property UserId for the current user.
+            </summary>
+            <returns>
+            The property UserId for the current user.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetUserID(System.String)">
+            <summary>
+            Gets the UserId for the User record corresponding to the
+            provided <paramref name="strUsername"/>.
+            </summary>
+            <param name="strUsername">
+            The Username used to lookup the User record.
+            </param>
+            <returns>
+            The UserId for the User specified by <paramref name="strUsername"/>.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.AddMembershipColumns(System.Data.DataTable)">
+            <summary>
+            Adds Membership columns to a <c>DataTable</c>.
+            </summary>
+            <remarks>
+            This method is primarily used to add Membership columns to
+            a DataTable that stores the User data.
+            </remarks>
+            <param name="dt">
+            The <c>DataTable</c> that Membership columns will be added to.
+            </param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetUserRecord(System.Int32)">
+            <summary>
+            Gets a DataRow that contains all of the data from the User table
+            and the pertinent ASP.NET authentication data for the provided
+            <paramref name="intUserid"/>.
+            </summary>
+            <param name="intUserid">
+            The Userid for the User data to be returned.
+            </param>
+            <returns>
+            A DataRow that contains all of the data from the User table
+            and the pertinent ASP.NET authentication data.  If a record
+            is not found for the provided Userid, then a DataRow with
+            default values will be returned.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetUserRecord">
+            <summary>
+            Get a DataRow that contains all of the data from the User table
+            and the pertinent ASP.NET authentication data for the current user.
+            </summary>
+            <returns>
+            A DataRow that contains all of the data from the User table
+            and the pertinent ASP.NET authentication data for the current user.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetUserRecord(System.String)">
+            <summary>
+            Gets a DataRow that contains all of the data from the User table
+            and the pertinent ASP.NET authentication data for the provided
+            <paramref name="strUsername"/>.
+            </summary>
+            <param name="strUsername">
+            The Username for the User data to be returned.
+            </param>
+            <returns>
+            A DataRow that contains all of the data from the User table
+            and the pertinent ASP.NET authentication data.  If a record
+            is not found for the provided Username, then a DataRow with
+            default values will be returned.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetUserTable">
+            <summary>
+            Gets a <c>DataTable</c> of all Users.
+            </summary>
+            <returns>
+            A <c>DataTable</c> of all Users that includes the data from the User table
+            and the ASP.NET authentication data.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.GetUserTable(System.String)">
+            <summary>
+            Gets a <c>DataTable</c> of all Users that are assigned the provided
+            <paramref name="strRole"/>.
+            </summary>
+            <param name="strRole">
+            The Role used to filter the User records.  If strRole is null, then all User
+            records are returned.
+            </param>
+            <returns>
+            A <c>DataTable</c> that contains all Users that are assigned the provided
+            <paramref name="strRole"/>.  If  strRole is null, then all User records are returned.
+            The returned data includes both the User table data and the ASP.NET authentication
+            data.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.ErrorDivWrapper(System.String)">
+            <summary>
+            Gets an HTML formatted error string.
+            </summary>
+            <param name="strMessage">
+            The message to be formatted with HTML.
+            </param>
+            <remarks>
+            This method wraps the provided <paramref name="strMessage"/> with
+            &lt;div id='Error'&gt;&lt;/div&gt;
+            </remarks>
+            <returns>
+            An HTML formatted error string.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.InfoDivWrapper(System.String)">
+            <summary>
+            Gets an HTML formatted information string.
+            </summary>
+            <param name="strMessage">
+            The message to be formatted with HTML.
+            </param>
+            <remarks>
+            This method wraps the provided <paramref name="strMessage"/> with
+            &lt;div id='Info'&gt;&lt;/div&gt;
+            </remarks>
+            <returns>
+            An HTML formatted information string.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.InList(System.Object,System.Object[])">
+            <summary>
+            Determines if a given <c>object</c> is contained within an
+            array of <c>object</c>s.
+            </summary>
+            <param name="toExpression">The object to be located.</param>
+            <param name="toItems">An array of objects to be searched.</param>
+            <returns>
+            A boolean value indicating if the provided <paramref name="toExpression"/>
+            exists in the provided <paramref name="toItems"/> array.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.JustFName(System.String)">
+            <summary>
+            Parses just the FileName from the provided URL.
+            </summary>
+            <param name="strFileName">
+            A file system path or URL.
+            </param>
+            <returns>
+            The FileName from the provided URL or file system path.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.JustNumbers(System.String)">
+            <summary>
+            Strips any non-numeric characters from a string and returns the results
+            </summary>
+            <param name="text">The text string from which non-numeric characters are stripped.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadLookupList(System.Web.UI.WebControls.DropDownList,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the Lookup table for
+            the provided LookupType.  The Lookup.ItemValue field is bound to DataValueField
+            and Lookup.ItemDescription is bound to DataTextField.  An additional item is added
+            as the first item in the dropdown with a value of " " and text of " - Select -".
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="LookupType">The Lookup Type used to populate the <c>DropDownList</c>.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadLookupList(System.Web.UI.WebControls.DropDownList,System.String,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the Lookup table for
+            the provided LookupType.  The Lookup.ItemValue field is bound to DataValueField
+            and Lookup.ItemDescription is bound to DataTextField.  An additional item is added
+            as the first item in the dropdown using the provided FirstItemDesc and FirstItemValue.
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="LookupType">The Lookup Type used to populate the <c>DropDownList</c>.</param>
+            <param name="FirstItemDesc">The description of the additional item that is added to the list.</param>
+            <param name="FirstItemValue">The value of the additional item that is added to the list.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadLookupList(System.Web.UI.WebControls.DropDownList,System.String,System.String,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the Lookup table for
+            the provided LookupType.  The Lookup.ItemValue field is bound to DataValueField
+            and the column name passed with <paramref name="DescField"/> is bound to DataTextField.
+            An additional item is added as the first item in the dropdown using the provided
+            FirstItemDesc and FirstItemValue.
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="LookupType">The Lookup Type used to populate the <c>DropDownList</c>.</param>
+            <param name="FirstItemDesc">The description of the additional item that is added to the list.</param>
+            <param name="FirstItemValue">The value of the additional item that is added to the list.</param>
+            <param name="DescField">The column name of the column to be bound to the DataTextField property.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadLookupList(System.Web.UI.WebControls.DropDownList,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the Lookup table for
+            the provided LookupType and filterd by the provided FilterKey value.  The column name provided
+            with <paramref name="CodeField"/> is bound to DataValueField and the column name passed with
+            <paramref name="DescField"/> is bound to DataTextField.  An additional item is added as the first
+            item in the dropdown using the provided FirstItemDesc and FirstItemValue.
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="LookupType">The Lookup Type used to populate the <c>DropDownList</c>.</param>
+            <param name="FirstItemDesc">The description of the additional item that is added to the list.</param>
+            <param name="FirstItemValue">The value of the additional item that is added to the list.</param>
+            <param name="DescField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="CodeField">The column name of the column to be bound to the DataValueField property.</param>
+            <param name="FilterKey">A value used to filter the Lookup items.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadLookupList(System.Web.UI.WebControls.ListBox,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the Lookup table for
+            the provided LookupType and filterd by the provided FilterKey value.  The column name provided
+            with <paramref name="CodeField"/> is bound to DataValueField and the column name passed with
+            <paramref name="DescField"/> is bound to DataTextField.  An additional item is added as the first
+            item in the dropdown using the provided FirstItemDesc and FirstItemValue.
+            </summary>
+            <param name="ListBoxRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="LookupType">The Lookup Type used to populate the <c>DropDownList</c>.</param>
+            <param name="FirstItemDesc">The description of the additional item that is added to the list.</param>
+            <param name="FirstItemValue">The value of the additional item that is added to the list.</param>
+            <param name="DescField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="CodeField">The column name of the column to be bound to the DataValueField property.</param>
+            <param name="FilterKey">A value used to filter the Lookup items.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableList(System.Web.UI.WebControls.DropDownList,System.String,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the table specified with the
+            <paramref name="Table"/> parameter.  The column name provided with <paramref name="CodeField"/> is
+            bound to DataValueField and the column name passed with <paramref name="DescField"/> is bound to
+            DataTextField.  An additional item is added as the first item in the dropdown using " " as the
+            value and " - Select -" as the Description.
+            </summary>
+            <remarks>
+            The Description/Code values are guaranteed to be unique and are ordered by the DescField.
+            </remarks>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="Table">The name of the table used to populate the DropDownList.</param>
+            <param name="DescField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="CodeField">The column name of the column to be bound to the DataValueField property.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableList(System.Web.UI.WebControls.DropDownList,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the table specified with the
+            <paramref name="Table"/> parameter and filterd with the provided WhereClause.  The column name provided
+            with <paramref name="CodeField"/> is bound to DataValueField and the column name passed with
+            <paramref name="DescField"/> is bound to DataTextField.  An additional item is added as the first item of
+            the dropdown using the provided FirstItemDesc and FirstItemValue.
+            </summary>
+            <remarks>
+            The Description/Code values are guaranteed to be unique and are ordered by the DescField.
+            </remarks>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="Table">The name of the table used to populate the DropDownList.</param>
+            <param name="DescField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="CodeField">The column name of the column to be bound to the DataValueField property.</param>
+            <param name="WhereClause">
+            A standard SQL where statement used to filter the items.  WHERE will automatically be prepended to the
+            provided statement and should not be included.
+            </param>
+            <param name="FirstItemDesc">The description of the additional item that is added to the list.</param>
+            <param name="FirstItemValue">The value of the additional item that is added to the list.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableList(System.Web.UI.WebControls.DropDownList,System.Data.DataTable,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the <c>DataTable</c> specified with the
+            <paramref name="dt"/> parameter.  The column name provided with <paramref name="ItemValueField"/> is bound
+            to DataValueField and the column name provided with <paramref name="ItemTextField"/> is bound to DataTextField.
+            An additional item is added as the first item of the dropdown using " - Select -" as the Text and " " as the
+            value.
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="dt">The <c>DataTable</c> used to populate the DropDownList.</param>
+            <param name="ItemTextField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="ItemValueField">The column name of the column to be bound to the DataValueField property.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableList(System.Web.UI.WebControls.ListBox,System.Data.DataTable,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the <c>DataTable</c> specified with the
+            <paramref name="dt"/> parameter.  The column name provided with <paramref name="ItemValueField"/> is bound
+            to DataValueField and the column name provided with <paramref name="ItemTextField"/> is bound to DataTextField.
+            An additional item is added as the first item of the dropdown using " - Select -" as the Text and " " as the
+            value.
+            </summary>
+            <param name="ListboxRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="dt">The <c>DataTable</c> used to populate the DropDownList.</param>
+            <param name="ItemTextField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="ItemValueField">The column name of the column to be bound to the DataValueField property.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableListWithoutSelect(System.Web.UI.WebControls.ListBox,System.Data.DataTable,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the <c>DataTable</c> specified with the
+            <paramref name="dt"/> parameter.  The column name provided with <paramref name="ItemValueField"/> is bound
+            to DataValueField and the column name provided with <paramref name="ItemTextField"/> is bound to DataTextField.
+            Additional first dummy item is not added
+            </summary>
+            <param name="ListboxRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="dt">The <c>DataTable</c> used to populate the DropDownList.</param>
+            <param name="ItemTextField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="ItemValueField">The column name of the column to be bound to the DataValueField property.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableList(System.Web.UI.WebControls.ListBox,System.Data.DataTable,System.String,System.String,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the <c>DataTable</c> specified with the
+            <paramref name="dt"/> parameter.  The column name provided with <paramref name="ItemValueField"/> is bound
+            to DataValueField and the column name provided with <paramref name="ItemTextField"/> is bound to DataTextField.
+            An additional item is added as the first item of the dropdown using the provided FirstItemText and FirstItemValue.
+            </summary>
+            <param name="ListboxRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="dt">The <c>DataTable</c> used to populate the DropDownList.</param>
+            <param name="ItemTextField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="ItemValueField">The column name of the column to be bound to the DataValueField property.</param>
+            <param name="FirstItemText">The description of the additional item that is added to the list.</param>
+            <param name="FirstItemValue">The value of the additional item that is added to the list.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableList(System.Web.UI.WebControls.DropDownList,System.Data.DataTable,System.String,System.String,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the <c>DataTable</c> specified with the
+            <paramref name="dt"/> parameter.  The column name provided with <paramref name="ItemValueField"/> is bound
+            to DataValueField and the column name provided with <paramref name="ItemTextField"/> is bound to DataTextField.
+            An additional item is added as the first item of the dropdown using the provided FirstItemText and FirstItemValue.
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="dt">The <c>DataTable</c> used to populate the DropDownList.</param>
+            <param name="ItemTextField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="ItemValueField">The column name of the column to be bound to the DataValueField property.</param>
+            <param name="FirstItemText">The description of the additional item that is added to the list.</param>
+            <param name="FirstItemValue">The value of the additional item that is added to the list.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableList(System.Web.UI.WebControls.DropDownList,System.Data.DataView,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the <c>DataView</c> specified with the
+            <paramref name="dv"/> parameter.  The column name provided with <paramref name="ItemValueField"/> is bound
+            to DataValueField and the column name provided with <paramref name="ItemTextField"/> is bound to DataTextField.
+            An additional item is added as the first item of the dropdown using " - Select -" as the Text and " " as the
+            value.
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="dv">The <c>DataView</c> used to populate the DropDownList.</param>
+            <param name="ItemTextField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="ItemValueField">The column name of the column to be bound to the DataValueField property.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableList(System.Web.UI.WebControls.DropDownList,System.Data.DataView,System.String,System.String,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the <c>DataView</c> specified with the
+            <paramref name="dv"/> parameter.  The column name provided with <paramref name="ItemValueField"/> is bound
+            to DataValueField and the column name provided with <paramref name="ItemTextField"/> is bound to DataTextField.
+            An additional item is added as the first item of the dropdown using the provided FirstItemText and FirstItemValue.
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="dv">The <c>DataView</c> used to populate the DropDownList.</param>
+            <param name="ItemTextField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="ItemValueField">The column name of the column to be bound to the DataValueField property.</param>
+            <param name="FirstItemText">The description of the additional item that is added to the list.</param>
+            <param name="FirstItemValue">The value of the additional item that is added to the list.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableList(System.Web.UI.WebControls.ListBox,System.String,System.String,System.String)">
+            <summary>
+            Populates the provided <c>ListBox</c> with data from the table specified with the
+            <paramref name="Table"/> parameter.  The column name provided with <paramref name="CodeField"/>
+            is bound to DataValueField and the column name provided with <paramref name="DescField"/>
+            is bound to DataTextField.
+            </summary>
+            <remarks>
+            The items are ordered by the DescField.
+            </remarks>
+            <param name="ListboxRef">The <c>ListBox</c> to be populated.</param>
+            <param name="Table">The name of the table used to populate the ListBox.</param>
+            <param name="DescField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="CodeField">The column name of the column to be bound to the DataValueField property.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadTableList(System.Web.UI.WebControls.ListBox,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Populates the provided <c>ListBox</c> with data from the table specified with the
+            <paramref name="Table"/> parameter and if provided, filterd with WhereClause.  The column name provided
+            with <paramref name="CodeField"/> is bound to DataValueField and the column name provided with
+            <paramref name="DescField"/> is bound to DataTextField.  If not null, an additional item is added as the
+            first item of the list using the provided FirstItemDesc and FirstItemValue.
+            </summary>
+            <remarks>
+            The items are ordered by the DescField.
+            </remarks>
+            <param name="ListboxRef">The <c>ListBox</c> to be populated.</param>
+            <param name="Table">The name of the table used to populate the ListBox.</param>
+            <param name="DescField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="CodeField">The column name of the column to be bound to the DataValueField property.</param>
+            <param name="WhereClause">
+            A standard SQL where statement used to filter the items.  WHERE will automatically be prepended to the
+            provided statement and should not be included.
+            </param>
+            <param name="FirstItemDesc">The description of the additional item that is added to the list.</param>
+            <param name="FirstItemValue">The value of the additional item that is added to the list.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadDatatableList(System.Web.UI.WebControls.DropDownList,System.Data.DataTable,System.String,System.String)">
+            <summary>
+            Populates the provided <c>DropDownList</c> with data from the <c>DataTable</c> specified with the
+            <paramref name="dt"/> parameter.  The column name provided with <paramref name="CodeField"/> is bound
+            to DataValueField and the column name provided with <paramref name="DescField"/> is bound to DataTextField.
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="dt">The <c>DataTable</c> used to populate the DropDownList.</param>
+            <param name="DescField">The column name of the column to be bound to the DataTextField property.</param>
+            <param name="CodeField">The column name of the column to be bound to the DataValueField property.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadNumberDropdown(System.Web.UI.WebControls.DropDownList)">
+            <summary>
+            Populate a <c>DropDownList</c> with 1 - 10.
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.LoadNumberDropdown(System.Web.UI.WebControls.DropDownList,System.Int32,System.Int32,System.String,System.String,System.Int32)">
+            <summary>
+            Populate a <c>DropDownList</c> with incremental numbers.
+            </summary>
+            <param name="DropdownRef">The <c>DropDownList</c> to be populated.</param>
+            <param name="StartNumber">The starting number.</param>
+            <param name="EndNumber">The ending number.</param>
+            <param name="FirstItemDesc">The description of the additional item that is added to the list.</param>
+            <param name="FirstItemValue">The value of the additional item that is added to the list.</param>
+            <param name="Increment">The increment.</param>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.RandomNumber">
+            <summary>
+            Returns a random number between 1 and 999999999 using a seed value
+            derived from the current time.
+            </summary>
+            <returns>A random number between 1 and 999999999.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.RandomNumber(System.Int32)">
+            <summary>
+            Returns a random number between 1 and <paramref name="MaxNumber"/>
+            using a seed value derived from the current time.
+            </summary>
+            <param name="MaxNumber">The maximum number that can be returned.</param>
+            <returns>A random number between 1 and <paramref name="MaxNumber"/>.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.RandomNumber(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Returns a random number between <paramref name="MinNumber"/> and <paramref name="MaxNumber"/>
+            using a seed value provided by <paramref name="RandomSeed"/>.
+            </summary>
+            <param name="MaxNumber">The maximum number that can be returned.</param>
+            <param name="MinNumber">The minimum number that can be returned.</param>
+            <param name="RandomSeed">The random seed number to use.</param>
+            <returns>A random number between <paramref name="MinNumber"/> and <paramref name="MaxNumber"/>.</returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.RecordsOnFile(System.String,System.String,System.Object)">
+            <summary>
+            Checks to see if records exist for <paramref name="tablename" /> 
+            where <paramref name="keyfield" /> is equal to <paramref name="keyvalue" />.
+            </summary>
+            <param name="tablename">The SQL Server table to be queried.</param>
+            <param name="keyfield">The table field name to be checked.</param>
+            <param name="keyvalue">The key value to be searched for.</param>
+            <returns>
+            A boolean value indicating if any results were found.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.ReplaceText(System.String,System.String,System.String)">
+            <summary>
+            Builds a new string where the occurrences of <paramref name="strSearchText"/>
+            within <paramref name="strText"/> have been replaced with <paramref name="strReplacement"/>.
+            </summary>
+            <param name="strText">The string to be searched and replaced.</param>
+            <param name="strSearchText">The string to be replaced.</param>
+            <param name="strReplacement">The string that will replace the searched text.</param>
+            <returns>
+            A new string where the occurrences of <paramref name="strSearchText"/>
+            within <paramref name="strText"/> have been replaced with <paramref name="strReplacement"/>.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.SanitizeText(System.String)">
+            <summary>
+            Returns a new string with all occurrences of " and ' converted to HTML entities.
+            </summary>
+            <param name="strInput">A string to be converted.</param>
+            <returns>
+            A new string with all occurrences of " and ' converted to HTML entities.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.SanitizeText(System.String,System.Boolean)">
+            <summary>
+            Returns a new string with all occurrences of " and ' converted to HTML entities.
+            &lt; and &gt; are also conditionally converted depending on the value of the
+            <paramref name="boolConvertBrackets"/> parameter.
+            </summary>
+            <param name="strInput">A string.</param>
+            <param name="boolConvertBrackets">Indicates whether &lt; and &gt; should be converted.</param>
+            <returns>
+            A new string with all occurrences of " and ' converted to HTML entities.
+            &lt; and &gt; are also conditionally converted depending on the value of the
+            <paramref name="boolConvertBrackets"/> parameter.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.ValidEmailAddress(System.String)">
+            <summary>
+            Determines if the provided <paramref name="Email"/> address is a valid email address.
+            </summary>
+            <param name="Email">A string to be validated as an email address.</param>
+            <returns>
+            true if the provided <paramref name="Email"/> is a valid email address, otherwise False.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.IsDate(System.String)">
+            <summary>
+            Determines if the provided <paramref name="dateString"/> can be parsed as a DateTime.
+            </summary>
+            <remarks>
+            Used to replace usages of VB IsDate function.
+            </remarks>
+            <param name="dateString">A string to be validated as a DateTime.</param>
+            <returns>
+            true if the provided <paramref name="dateString"/> can be parsed as a DateTime, otherwise false.
+            </returns>
+        </member>
+        <member name="M:Support.Miscellaneous.Utilities.IsDBNull(System.Object)">
+            <summary>
+            Used to determine if the provided object is a DBNull.
+            </summary>
+            <remarks>
+            Used to replace usages of VB IsDBNull function.
+            </remarks>
+            <param name="o">Any object.</param>
+            <returns>
+            true if the provided object is equal to DBNull.Value, otherwise false.
+            </returns>
+        </member>
+        <member name="T:Support.Miscellaneous.Utilities.ControlChars">
+            <summary>
+            A class to contain static control character values.
+            </summary>
+            <remarks>
+            Used to replace usages of VB ControlChars.CrLf.
+            </remarks>
+        </member>
+        <member name="T:Support.Business.BusinessObject">
+            <summary>
+            Business object base class
+            </summary>
+        </member>
+        <member name="F:Support.Business.BusinessObject._BrokenRules">
+            <summary>
+            Collection of broken rules
+            </summary>
+        </member>
+        <member name="F:Support.Business.BusinessObject._RequiredFields">
+            <summary>
+            Required fields collection
+            </summary>
+        </member>
+        <member name="P:Support.Business.BusinessObject.BrokenRuleCount">
+            <summary>
+            The number of broken rules
+            </summary>
+        </member>
+        <member name="P:Support.Business.BusinessObject.HasBrokenRules">
+            <summary>
+            Returns true if there are any broken rules.
+            </summary>
+        </member>
+        <member name="P:Support.Business.BusinessObject.ActiveRecordColumnName">
+            <summary>
+            Active record column name. (Expected Values = "Active", "IsActive", "IsDeleted" etc)
+            </summary>
+        </member>
+        <member name="P:Support.Business.BusinessObject.ActiveRecordsColumnValue">
+            <summary>
+            Column Value in order to apply filter in order to get active only records.
+            </summary>
+        </member>
+        <member name="P:Support.Business.BusinessObject.AllowOnlySoftDelete">
+            <summary>
+            Only Soft Delete objects
+            </summary>
+        </member>
+        <member name="M:Support.Business.BusinessObject.#ctor">
+            <summary>
+            BusinessObject constructor
+            </summary>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadTableStructure(System.String)">
+            <summary>
+            Returns a table structure and bind it to the table in the class instance
+            </summary>
+        </member>
+        <member name="M:Support.Business.BusinessObject.GetRecordByID(System.String,System.String,System.String)">
+            <summary>
+            Returns a DataTable containing the record(s) with the specified key
+            </summary>
+            <param name="strprimarykey">Key Value for lookup</param>
+            <param name="strkeyfield">Key Field for lookup (optional)</param>
+        </member>
+        <member name="M:Support.Business.BusinessObject.DeleteRecordByID(System.Int32,System.String)">
+            <summary>
+            Delete the records matching the specified primary key
+            </summary>
+            <param name="primarykey">Primary Key</param>
+            <returns>Integer</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.AddNewRow(System.Boolean)">
+            <summary>
+            Adds a blank row to the object's DataTable.
+            </summary>
+            <param name="dt">DataTable</param>
+            <returns>New row number</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.DeleteRow(System.Boolean,System.Int32,System.Boolean)">
+            <summary>
+            Delete the selected row from the object's DataTable.
+            </summary>
+            <returns>New row number</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.ExecuteSQL(System.String)">
+            <summary>
+            Execute the selected query.
+            </summary>
+            <returns>Return results of query</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.ExecuteScalar(System.String)">
+            <summary>
+            Execute the selected query.
+            </summary>
+            <returns>Return results of query</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.ExecuteScalarString(System.String)">
+            <summary>
+            Execute the selected query.
+            </summary>
+            <returns>Return results of query</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SetFieldDefaults(System.Data.DataRow)">
+            <summary>
+            Function overridden in BusinessObjects used to set field defaults for new records
+            </summary>
+        </member>
+        <member name="M:Support.Business.BusinessObject.GetNewPrimaryKey">
+            <summary>
+            Returns the next Location number to be used for a new, blank Location record
+            </summary>
+            <returns>String</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.GetDataTable(System.String)">
+            <summary>
+            Returns a DataTable containing data returned by executing the specified command
+            </summary>
+            <param name="command">Command to be executed</param>
+            <returns></returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.GetDataTable(System.String,System.Boolean)">
+            <summary>
+            Returns a DataTable containing data returned by executing the specified command
+            </summary>
+            <param name="command">Command to be executed</param>
+            <param name="supressException">Determines whether this function returns an empty datatable or throws an exception upon exception.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadDataTable(System.String)">
+            <summary>
+            Loads a DataTable into the current object containing data returned by executing the specified command
+            </summary>
+            <param name="command">Command to be executed</param>
+            <returns></returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SaveDataTable(System.Boolean)">
+            <summary>
+            Saves the object's DataTable
+            </summary>
+            <param name="BypassValidation">Bypasses the validation routine</param>
+            <returns>Number of rows affected. Returns -1 if business rules failed</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.Web.UI.WebControls.CheckBox,System.String,System.Int32)">
+            <summary>
+            Sets the selected item for a Checkbox instance
+            </summary>
+            <param name="CheckboxRef">CheckboxRef</param>
+            <param name="ColumnName">String</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.Web.UI.HtmlControls.HtmlInputHidden,System.String,System.Int32)">
+            <summary>
+            Loads a value from a Datarow column into a hidden form var
+            </summary>
+            <param name="HtmlInputHidden">Inputhidden</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.Web.UI.WebControls.HiddenField,System.String,System.Int32)">
+            <summary>
+            Loads a value from a Datarow column into a hidden form var
+            </summary>
+            <param name="HiddenField">Hiddenfield</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.String@,System.String,System.Int32)">
+            <summary>
+            Loads a value from a Datarow column into a Textbox form var
+            </summary>
+            <param name="Textbox">Textbox</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.Web.UI.WebControls.TextBox,System.String,System.Int32)">
+            <summary>
+            Loads a value from a Datarow column into a Textbox form var
+            </summary>
+            <param name="Textbox">Textbox</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.Web.UI.WebControls.Label,System.String,System.Int32)">
+            <summary>
+            Loads a value from a Datarow column into a Label form var
+            </summary>
+            <param name="Label">Label</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.Web.UI.WebControls.DropDownList,System.String,System.Int32)">
+            <summary>
+            Sets the selected item for a Dropdown List instance
+            </summary>
+            <param name="DropDownRef">DropDownList</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.Web.UI.WebControls.RadioButtonList,System.String,System.Int32)">
+            <summary>
+            Sets the selected item for a RadioButtonList instance
+            </summary>
+            <param name="rbl">A RadioButtonList instance</param>
+            <param name="ColumnName">The column name used to set the value of the RadioButtonList</param>
+            <param name="RowNo">Row number</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.Web.UI.WebControls.CheckBoxList,System.String,System.Int32)">
+            <summary>
+            Sets the selected item for a CheckBoxList instance
+            </summary>
+            <param name="rbl">A CheckBoxList instance</param>
+            <param name="ColumnName">The column name used to set the value of the CheckBoxList</param>
+            <param name="RowNo">Row number</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.Web.UI.WebControls.RadioButton,System.Web.UI.WebControls.RadioButton,System.String,System.Int32)">
+            <summary>
+            Sets the selected item for a group of 3 Radio Buttons
+            </summary>
+            <param name="Rb1">RadioButton</param>
+            <param name="Rb2">RadioButton</param>
+            <param name="Rb3">RadioButton</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.LoadFormVar(System.Web.UI.WebControls.RadioButton,System.Web.UI.WebControls.RadioButton,System.Web.UI.WebControls.RadioButton,System.String,System.Int32)">
+            <summary>
+            Sets the selected item for a group of 3 Radio Buttons
+            </summary>
+            <param name="Rb1">RadioButton</param>
+            <param name="Rb2">RadioButton</param>
+            <param name="Rb3">RadioButton</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SaveDateFormVar(System.String,System.Web.UI.WebControls.TextBox,System.Web.UI.WebControls.TextBox,System.String,System.Boolean,System.Boolean,System.Int32)">
+            <summary>
+            Builds and save a date value into a Datarow column
+            </summary>
+            <param name="dr">Datarow</param>
+            <param name="ColumnName">String</param>
+            <param name="Dateref">Textbox</param>
+            <param name="Hourref">Dropdownlist</param>
+            <param name="Minuteref">Dropdownlist</param>
+            <param name="Ampmref">Dropdownlist</param>
+            <param name="Required">Boolean</param>
+            <param name="ColumnDesc">String</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SaveFormVar(System.Web.UI.WebControls.CheckBox,System.String,System.Int32)">
+            <summary>
+            Saves a value from a Checkbox form var into a Datarow column
+            </summary>
+            <param name="CheckboxRef">CheckBox</param>
+            <param name="ColumnName">String</param>
+            <param name="Required">Boolean</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SaveFormVar(System.String,System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+            Saves a value from a Text String into a Datarow column
+            </summary>
+            <param name="TextStr">String</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <param name="Required">Boolean</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SaveFormVar(System.Web.UI.HtmlControls.HtmlInputHidden,System.String,System.String,System.Int32)">
+            <summary>
+            Saves a value from a hidden form var into a Datarow column
+            </summary>
+            <param name="HiddenField">Hiddenfield</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <param name="Required">Boolean</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SaveFormVar(System.Web.UI.WebControls.HiddenField,System.String,System.String,System.Int32)">
+            <summary>
+            Saves a value from a hidden form var into a Datarow column
+            </summary>
+            <param name="HiddenField">Hiddenfield</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <param name="Required">Boolean</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SaveFormVar(System.Web.UI.WebControls.TextBox,System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+            Saves a value from a Textbox form var into a Datarow column
+            </summary>
+            <param name="Textbox">Textbox</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <param name="Required">Boolean</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SaveFormVar(System.Web.UI.WebControls.DropDownList,System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+            Saves a value from a DropdownList form var into a Datarow column
+            </summary>
+            <param name="DropDownRef">DropDownList</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <param name="Required">Boolean</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SaveFormVar(System.Web.UI.WebControls.RadioButton,System.Web.UI.WebControls.RadioButton,System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+            Saves the selected value from a group of 3 Radio Buttons into a Datarow column
+            </summary>
+            <param name="Rb1">RadioButton</param>
+            <param name="Rb2">RadioButton</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <param name="Required">Boolean</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.SaveFormVar(System.Web.UI.WebControls.RadioButton,System.Web.UI.WebControls.RadioButton,System.Web.UI.WebControls.RadioButton,System.String,System.String,System.Boolean,System.Int32)">
+            <summary>
+            Saves the selected value from a group of 3 Radio Buttons into a Datarow column
+            </summary>
+            <param name="Rb1">RadioButton</param>
+            <param name="Rb2">RadioButton</param>
+            <param name="Rb3">RadioButton</param>
+            <param name="dr">DataRow</param>
+            <param name="ColumnName">String</param>
+            <param name="Required">Boolean</param>
+            <returns>Nothing</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.AddBrokenRule(System.String)">
+            <summary>
+            Add the specified broken rule to the broken rule collection if it's not already there
+            </summary>
+            <param name="BrokenRule">The broken rule to be added to the collection</param>
+        </member>
+        <member name="M:Support.Business.BusinessObject.CheckRequiredFields">
+            <summary>
+            Checks if all required fields are entered for the current DataTable referenced by dt.
+            </summary>
+            <returns>True if all fields are entered, otherwise False</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.CheckRequiredFields(System.Data.DataTable)">
+            <summary>
+            Checks if all required fields are entered for the provided DataTable
+            </summary>
+            <param name="dt">DataTable</param>
+            <returns>True if all fields are entered, otherwise False</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.CheckRulesHook">
+            <summary>
+            Validate the data for the DataTable currently referenced by dt.
+            </summary>
+        </member>
+        <member name="M:Support.Business.BusinessObject.CheckRulesHook(System.Data.DataTable)">
+            <summary>
+            Provides a hook method into which developers can place
+            application-specific code to check rules
+            </summary>
+            <returns>Logical true if no broken rules, otherwise, false</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.ClearBrokenRules">
+            <summary>
+            Clears the broken rules collection
+            </summary>
+        </member>
+        <member name="M:Support.Business.BusinessObject.ClearRule(System.String)">
+            <summary>
+            Removes the specified broken rule from the collection
+            </summary>
+            <param name="??">Broken rule string to be cleared</param>
+        </member>
+        <member name="M:Support.Business.BusinessObject.GetBrokenRule(System.Int32)">
+            <summary>
+            Returns the nth broken rule specified by the index number
+            </summary>
+            <param name="index">Index number of broken rule to be returned</param>
+            <returns>The nth broken rule</returns>
+        </member>
+        <member name="M:Support.Business.BusinessObject.GetBrokenRuleList(System.Boolean)">
+            <summary>
+            Returns the list of broken rule messages in an unordered list
+            </summary>
+            <returns>The entire broken rule message list</returns>
+        </member>
+        <member name="M:BusinessObjects.FileCaptionBO.GetRecordByFilename(System.String)">
+            <summary>
+            Returns a DataTable containing the record with the specified caption matching the supplied filename.
+            </summary>
+            <param name="Filename">Filename</param>
+            <returns>DataSet</returns>
+        </member>
+        <member name="M:BusinessObjects.PagemasterBO.GetRecordByPage(System.String)">
+            <summary>
+            Returns a DataTable containing the record with the specified page name (example, "default.aspx")
+            </summary>
+            <param name="primarykey">Primary Key</param>
+            <returns>DataSet</returns>
+        </member>
+    </members>
+</doc>
