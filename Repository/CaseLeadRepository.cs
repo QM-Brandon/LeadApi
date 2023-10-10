@@ -24,7 +24,7 @@ public class CaseLeadRepository : ICaseLeadRepository
 
     }
 
-    public async Task<string> AddCaseLead(CaseLeadData data, Guid affiliateId)
+    public async Task<string> AddCaseLead(CaseLeadData data, Guid affiliateId, string api)
     {
         var caseid = string.Empty;
         var parameters = new List<SqlParameter>
@@ -46,7 +46,7 @@ public class CaseLeadRepository : ICaseLeadRepository
             new SqlParameter("@CaseType", SqlDbType.VarChar) { Value = data.CaseType },
             new SqlParameter("@AffiliateId", SqlDbType.UniqueIdentifier) { Value = affiliateId },
             new SqlParameter("@CaseIdOutput", SqlDbType.UniqueIdentifier,255, ParameterDirection.Output,false, 0, 0, null, DataRowVersion.Default, null),
-            new SqlParameter("@LeadId", SqlDbType.VarChar) {Value = data.LeadId}
+            new SqlParameter("@LeadId", SqlDbType.VarChar) {Value = null}
         };
 
         using (var connection = new SqlConnection(_connectionString))
@@ -62,7 +62,20 @@ public class CaseLeadRepository : ICaseLeadRepository
                 connection.Open();
                 await command.ExecuteNonQueryAsync();
                 caseid = Convert.ToString(command.Parameters["@CaseIdOutput"].Value);
+                string insertIntoLogs = "insert into qmLeadsApiLogs (Timestamp,Action, APIKey, caseid) values ("
+                + "'" + DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss") + "',"
+                + "'SubmitLead',"
+                + "'" + api + "',"
+                + "'" + caseid + "')";
+
+                var commandLog = new SqlCommand(insertIntoLogs, connection)
+                {
+                    CommandType = CommandType.Text,
+                    CommandTimeout = 50
+                };
+                var result = commandLog.ExecuteNonQuery();
             }
+
             finally
             {
                 connection.Close();
@@ -72,6 +85,81 @@ public class CaseLeadRepository : ICaseLeadRepository
         return caseid;
     }
 
+
+    public async Task<string> AddCaseLead(CaseLeadData data, Guid affiliateId, string api,Dictionary<string,string> extraData)
+    {
+        var caseid = string.Empty;
+        var test = data.ProcessedIncidentDate;
+        var parameters = new List<SqlParameter>
+        {
+            new SqlParameter("@CampaignType", SqlDbType.VarChar) { Value = data.Source },
+            new SqlParameter("@PotentialClientFullName", SqlDbType.VarChar) { Value = data.PotentialClientFullName },
+            new SqlParameter("@PotentialClientFirstName", SqlDbType.VarChar) { Value = data.PotentialClientFirstName },
+            new SqlParameter("@PotentialClientMiddleName", SqlDbType.VarChar) { Value = data.PotentialClientMiddleName },
+            new SqlParameter("@PotentialClientLastName", SqlDbType.VarChar) { Value = data.PotentialClientLastName },
+            new SqlParameter("@PotentialClientStreetAddress", SqlDbType.VarChar) { Value = data.PotentialClientStreetAddress },
+            new SqlParameter("@PotentialClientCity", SqlDbType.VarChar) { Value = data.PotentialClientCity },
+            new SqlParameter("@PotentialClientState", SqlDbType.VarChar) { Value = data.PotentialClientState },
+            new SqlParameter("@PotentialClientZip", SqlDbType.VarChar) { Value = data.PotentialClientZip },
+            new SqlParameter("@AccidentState", SqlDbType.VarChar) { Value = data.AccidentState },
+            new SqlParameter("@PotentialClientPhoneNumber", SqlDbType.VarChar) { Value = data.PotentialClientPhoneNumber },
+            new SqlParameter("@PotentialClientEmail", SqlDbType.VarChar) { Value = data.PotentialClientEmail },
+            new SqlParameter("@CaseDescription", SqlDbType.VarChar) { Value = data.CaseDescription },
+            new SqlParameter("@IncidentDate", SqlDbType.DateTime) { Value = data.ProcessedIncidentDate, IsNullable = true },
+            new SqlParameter("@CaseType", SqlDbType.VarChar) { Value = data.CaseType },
+            new SqlParameter("@AffiliateId", SqlDbType.UniqueIdentifier) { Value = affiliateId },
+            new SqlParameter("@CaseIdOutput", SqlDbType.UniqueIdentifier,255, ParameterDirection.Output,false, 0, 0, null, DataRowVersion.Default, null),
+            new SqlParameter("@LeadId", SqlDbType.VarChar) {Value = null},
+            new SqlParameter("@atFault", SqlDbType.VarChar) {Value = extraData["atFault"]},
+            new SqlParameter("@work_vehicle", SqlDbType.VarChar) {Value = extraData["work_vehicle"]},
+            new SqlParameter("@injured", SqlDbType.VarChar) {Value = extraData["injured"]},
+            new SqlParameter("@medical", SqlDbType.VarChar) {Value = extraData["medical"]},
+            new SqlParameter("@retainedAttorney", SqlDbType.VarChar) {Value = extraData["retainedAttorney"]},
+            new SqlParameter("@c", SqlDbType.VarChar) {Value = extraData["c"]},
+            new SqlParameter("@s1", SqlDbType.VarChar) {Value = extraData["s1"]},
+            new SqlParameter("@s2", SqlDbType.VarChar) {Value = extraData["s2"]},
+            new SqlParameter("@s3", SqlDbType.VarChar) {Value = extraData["s3"]}
+        };
+
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            try
+            {
+                var command = new SqlCommand("QMCase_AddLead_CID", connection)
+                {
+                    CommandType = CommandType.StoredProcedure,
+                    CommandTimeout = 50
+                };
+                command.Parameters.AddRange(parameters.ToArray());
+                connection.Open();
+
+                await command.ExecuteNonQueryAsync();
+                caseid = Convert.ToString(command.Parameters["@CaseIdOutput"].Value);
+                string insertIntoLogs = "insert into qmLeadsApiLogs (Timestamp,Action, APIKey, caseid) values ("
+                + "'" + DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss") + "',"
+                + "'SubmitLeadCID',"
+                + "'" + api + "',"
+                + "'" + caseid + "')";
+
+                var commandLog = new SqlCommand(insertIntoLogs, connection)
+                {
+                    CommandType = CommandType.Text,
+                    CommandTimeout = 50
+                };
+                var result = commandLog.ExecuteNonQuery();
+            }catch (Exception e)
+            {
+
+            }
+
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        return caseid;
+    }
     public DataTable GetAffiliateWithApiKey(Guid apiKey)
     {
         using (var connection = new SqlConnection(_connectionString))
@@ -124,7 +212,34 @@ public class CaseLeadRepository : ICaseLeadRepository
         }
     }
 
-    CaseLead ICaseLeadRepository.GetLead(string caseid, Guid affiliateid)
+    CaseLead ICaseLeadRepository.GetLead(string api,string caseid)
+    {
+        CaseLead toReturn = GetLead(caseid);
+        string insertIntoLogs = "insert into qmLeadsApiLogs (Timestamp,Action, APIKey, caseid) values ("
+                + "'" + DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss") + "',"
+                + "'GetLead',"
+                + "'" + api + "',"
+                + "'" + caseid + "')";
+        using (var connection = new SqlConnection(_connectionString))
+        {
+            var command = new SqlCommand(insertIntoLogs, connection)
+            {
+                CommandType = CommandType.Text,
+                CommandTimeout = 50
+            };
+            connection.Open();
+            command = new SqlCommand(insertIntoLogs, connection)
+            {
+                CommandType = CommandType.Text,
+                CommandTimeout = 50
+            };
+            var result = command.ExecuteNonQuery();
+            connection.Close();
+        }
+        return toReturn;
+    }
+
+    private CaseLead GetLead(string caseid)
     {
         CaseLead lead = new CaseLead();
         using (var connection = new SqlConnection(_connectionString))
@@ -193,6 +308,7 @@ public class CaseLeadRepository : ICaseLeadRepository
                 connection.Open();
                 using (SqlDataReader sdr = command.ExecuteReader())
                 {
+                    
                     while (sdr.Read())
                     {
                         int passengercount;
@@ -271,40 +387,13 @@ public class CaseLeadRepository : ICaseLeadRepository
             return validate;
         }
         Dictionary<string, object> caseUpdateDict = Dyn2Dict(caseUpdate);
+        CaseLead oldCase = GetLead(caseUpdateDict["caseid"].ToString());
         using (var connection = new SqlConnection(_connectionString))
         {
-            string sqlCommand = "select * from qmcase where caseid='" + caseUpdateDict["caseid"].ToString() + "'";
+
             string updateType = "caseid";
-            var command = new SqlCommand(sqlCommand, connection)
-            {
-                CommandType = CommandType.Text,
-                CommandTimeout = 50
-            };
-            connection.Open();
-            SqlDataReader sdr = command.ExecuteReader();
-            if (!sdr.HasRows)
-            {
-                updateType = "leadid";
-                sqlCommand = "select * from qmcase where leadid='" + caseUpdateDict["leadid"].ToString() + "'";
-                command = new SqlCommand(sqlCommand, connection)
-                {
-                    CommandType = CommandType.Text,
-                    CommandTimeout = 50
-                };
-                sdr = command.ExecuteReader();
-                if (!sdr.HasRows)
-                {
-                    return new Tuple<int, string>(-1, "Case not found");
-                }
-            }
-            Case oldCase = new Case();
-            using (sdr)
-            {
-                while (sdr.Read())
-                {
-                    oldCase = MapRowToCase(sdr);
-                }
-            }
+
+           
             Dictionary<string, string> oldValues = new Dictionary<string, string>();
             Dictionary<string, string> newValues = new Dictionary<string, string>();
             string updateSqlStatement = "update qmcase set ";
@@ -317,7 +406,7 @@ public class CaseLeadRepository : ICaseLeadRepository
             foreach (KeyValuePair<string, object> kvp in caseUpdateDict)
             {
                 //Console.WriteLine($"Key: {property.Key}, Value: {property.Value}");
-                if (kvp.Key == "leadid" || kvp.Key == "caseid" || kvp.Key == "api_key")
+                if (kvp.Key == "caseid" || kvp.Key == "api_key")
                 {
                     continue;
                 }
@@ -397,18 +486,16 @@ public class CaseLeadRepository : ICaseLeadRepository
                 newValues.Add(kvp.Key, kvp.Value.ToString());
             }
             updateSqlStatement += "updatedon = '" + DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss") + "'";
-            if (updateType == "caseid") {
-                updateSqlStatement += " where " + updateType + " = '" + caseUpdateDict["caseid"]+"'";
-            }
-            else
-            {
-                updateSqlStatement += " where " + updateType + " = '" + caseUpdateDict["leadid"]+"'";
-            }
-            command = new SqlCommand(updateSqlStatement, connection)
+
+            updateSqlStatement += " where " + updateType + " = '" + caseUpdateDict["caseid"]+"'";
+            
+
+            var command = new SqlCommand(updateSqlStatement, connection)
             {
                 CommandType = CommandType.Text,
                 CommandTimeout = 50
             };
+            connection.Open();
             int result =command.ExecuteNonQuery();
             if(result <= 0)
             {
@@ -426,10 +513,8 @@ public class CaseLeadRepository : ICaseLeadRepository
                 oldValuesSql += kvp.Key + ":" + kvp.Value + ",";
             }
             oldValuesSql.TrimEnd();
-            string updateLeadId = caseUpdateDict.ContainsKey("leadid") ? caseUpdateDict["leadid"].ToString() : "";
             string updateCaseId = caseUpdateDict.ContainsKey("caseid") ? caseUpdateDict["caseid"].ToString() : "";
-            string insertIntoLogs = "insert into qmLeadsApiLogs (leadID,Timestamp,Action, [Previous Fields and Values],[New Fields and Values], APIKey, caseid) values ("
-                +"'"+ updateLeadId + "',"
+            string insertIntoLogs = "insert into qmLeadsApiLogs (Timestamp,Action, [Previous Fields and Values],[New Fields and Values], APIKey, caseid) values ("
                 + "'" + DateTime.Now.ToString("MM-dd-yyyy HH:mm:ss") + "',"
                 +"'Update',"
                 +"'"+ oldValuesSql+"',"
@@ -447,6 +532,7 @@ public class CaseLeadRepository : ICaseLeadRepository
             {
                 return new Tuple<int, string>(0, "Log Not Entered");
             }
+            connection.Close();
             return new Tuple<int, string>(1, "");
         }
     }
@@ -650,7 +736,6 @@ public class CaseLeadRepository : ICaseLeadRepository
         caseInfoList.Add("rejectleadby");
         caseInfoList.Add("transfername");
         caseInfoList.Add("transfertime");
-        caseInfoList.Add("leadid");
         caseInfoList.Add("api_key");
         return caseInfoList;
     }

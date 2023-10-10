@@ -8,6 +8,7 @@ using System.Web.Configuration;
 using System.Data.SqlTypes;
 using Q.TESTAPI2.Models;
 using Support.Email;
+using System.Collections.Generic;
 
 public class CaseLeadService : ICaseLeadService
 {
@@ -20,15 +21,25 @@ public class CaseLeadService : ICaseLeadService
         _repository = new CaseLeadRepository();
     }
 
-    public async Task ProcessCaseLead(CaseLeadParameter caseLead, Guid affiliateId)
+    public async Task ProcessCaseLead(CaseLeadParameter caseLead, Guid affiliateId, string api)
     {
         var data = GetCaseDate(caseLead);
         SetPotentialClientFullName(data);
         SetStateName(data);
-        var caseId = await _repository.AddCaseLead(data, affiliateId);
+        var caseId = await _repository.AddCaseLead(data, affiliateId, api);
         await LogApiCall(caseLead, affiliateId);
         SendCaseLeadNotification(data, caseId);
     }
+
+    public async Task ProcessCaseLead(CaseLeadData caseLead, Guid affiliateId, string api, Dictionary<string,string> extraData)
+    {
+        SetPotentialClientFullName(caseLead);
+        SetStateName(caseLead);
+        var caseId = await _repository.AddCaseLead(caseLead, affiliateId, api, extraData);
+        await LogApiCall(caseLead, affiliateId);
+        SendCaseLeadNotification(caseLead, caseId);
+    }
+
 
     public Tuple<bool, Guid> GetAPIKeyData(CaseLeadParameter data)
     {
@@ -71,7 +82,6 @@ public class CaseLeadService : ICaseLeadService
     private CaseLeadData GetCaseDate(CaseLeadParameter data)
     {
         DateTime processIncidentDate;
-
         return new CaseLeadData()
         {
             API_Key = data.API_Key,
@@ -167,15 +177,30 @@ public class CaseLeadService : ICaseLeadService
             , data.PotentialClientFullName, data.CaseDescription, data.CaseType, data.IncidentDate, notificationURL, caseId);
         var emailSender = new Email();
         emailSender.SendEmailMessage(emailAddress, subject, message, string.Empty, string.Empty, string.Empty);
+
+
+
+        var emailAddress2 = WebConfigurationManager.AppSettings["intakenotificationemail"];
+        var subject2 = string.Format("Lead: {1}, PC: {0}", data.PotentialClientFullName, data.Source);
+        var message2 = string.Format(
+                @"PotentialClientFirstName : {0}<br>
+                <p>PotentialClientLastName: {1}</p>
+                <p>PotentialClientPhoneNumber: {2}</p>
+                <p>PotentialClientEmail: {3}</p>
+                <p>CaseDescription: {4}</p>
+                <p>IncidentDate: {5}</p>
+                <p>AccidentState: {6}</p>
+                <p>PotentialClientState: {7}</p>
+                <p>PotentialClientZip: {8}</p>
+                "
+    , data.PotentialClientFirstName, data.PotentialClientLastName, data.PotentialClientPhoneNumber, data.PotentialClientEmail, data.CaseDescription, data.IncidentDate, data.AccidentState, data.PotentialClientState, data.PotentialClientZip);
+        emailSender.SendEmailMessage(emailAddress2, subject2, message2, string.Empty, string.Empty, string.Empty);
     }
 
-    public CaseLead GetCaseLead(string caseid, Guid affiliateid)
+    public CaseLead GetCaseLead(string api,string caseid)
     {
-        var today = DateTime.Now;
-        var logId = Guid.NewGuid();
-        var message = PrepareMessageForLog(caseid, affiliateid, today);
-
-        return _repository.GetLead(caseid, affiliateid);
+       
+        return _repository.GetLead(api,caseid);
     }
 
     public Tuple<int, string> UpdateCase(dynamic caseUpdate)
